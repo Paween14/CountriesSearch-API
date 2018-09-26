@@ -19,6 +19,8 @@ const searchInput = document.querySelector('.input-search');
 const button = document.querySelector('.fa-search');
 const wrapper = document.querySelector('.wrapper-area');
 const tableBody = document.querySelector('tbody');
+const sortPop = document.querySelector('.fa-sort');
+const continentSelect = document.querySelector('.option-continent');
 
 // =================================== Fetch function ===================================
 
@@ -30,6 +32,7 @@ fetch(url)
                 //console.log(countryData(countries))
                 countryData(countries);
                 createBoxOfInfo(countriesInfo);
+                countRegions(countriesInfo);
             })
  
 // =================================== Helper functions ===================================
@@ -73,9 +76,8 @@ const createBoxOfInfo = (countryArr) => {
             <td>${country.population}</td>
             <td>${country.region}</td>
             <td>${country.subregion}</td>
-            <td>${country.currency[0]} <br> ( ${country.currency[1
-            ]} )</td>
-            <td>${country.language}</td>
+            <td>${country.currency[0]} <br> ( ${country.currency[1]} )</td>
+            <td>${country.language.join(',<br>')}</td>
         `;
         row.innerHTML = html;
         tableBody.appendChild(row);
@@ -86,7 +88,7 @@ const createBoxOfInfo = (countryArr) => {
 const sortCountry = () => {
     let inputValue = searchInput.value.toLowerCase();
 
-    if (inputValue.length === 1) {
+    if (inputValue.length == 1) {
         let firstChar = countriesInfo.filter((country) => {
             return country.name.toLowerCase()[0] == inputValue;     
         })
@@ -100,8 +102,6 @@ const sortCountry = () => {
             let currency = country.currency.join().toLowerCase().includes(inputValue);          //**currency and languages are in an array, so using .join() to convert to be string 
             let languages =  country.language.join().toLowerCase().includes(inputValue);
             return name || capital || region || subregion || currency || languages;              //***
-            
-            
         })
             //console.log(includingWord);   ---> for study how it works when it's searching
         createBoxOfInfo(includingWord);
@@ -113,9 +113,78 @@ const sortCountry = () => {
         //console.log(firstChar);
 }
 
+const sortPopulationDescen = () => {
+    let selectedRegionInfo = selectedRegion();           // return countries which in that region which is selected
+        //console.log(selectedRegionInfo);
+    
+    let sortPop = selectedRegionInfo.sort((a, b) => b.population - a.population)
+    createBoxOfInfo(sortPop);
+    return sortPop;
+}
+
+const sortPopulationAscen = () => {
+    let selectedRegionInfo = selectedRegion();  
+    let sortPop = selectedRegionInfo.sort((a, b) => a.population - b.population)
+    createBoxOfInfo(sortPop);
+    return sortPop;
+}
+
+
+// Create the select menu from what region there are around the world
+const countRegions = (arr) => {
+    let regions = [];
+    arr.forEach((country) => {
+      if(!regions.includes(country.region)){
+        regions.push(country.region)
+      }
+    });
+    //return regions;
+
+    continentSelect.innerHTML = '';
+    let firstOpt = document.createElement('option');
+    firstOpt.innerHTML = 'Continent';
+    continentSelect.appendChild(firstOpt);
+    regions.forEach((region) => {
+       let option = document.createElement('option');
+       option.innerHTML = region; 
+       option.value = region;
+       continentSelect.appendChild(option); 
+    })
+}
+
+const selectedRegion = () => {
+    // To sort the countries by selected region
+    let selectedOpt = continentSelect.options[continentSelect.selectedIndex].value;
+    //console.log(selectedOpt);
+    
+    let selectedRegion = countriesInfo.filter((country) => {
+        if (selectedOpt == 'Continent') {
+            return countriesInfo;
+        }
+        return country.region == selectedOpt;
+    })
+    createBoxOfInfo(selectedRegion);
+    return selectedRegion;
+    
+}
+
 // =================================== Event listeners ===================================
+let clickCount = 0;
 searchInput.addEventListener('input', sortCountry);
 button.addEventListener('click', sortCountry);
+sortPop.addEventListener('click', () => {
+    //let clickCount = 0;    ---- problem: 'clickCount' has to be in global scope
+    
+    if ( clickCount%2 == 0 ) {
+        sortPopulationDescen();
+    } else {
+        sortPopulationAscen();
+    }
+    console.log(clickCount);
+    clickCount++;
+    
+});
+continentSelect.addEventListener('click', selectedRegion);
 
 // =================================== Notes =============================================
 
@@ -135,12 +204,6 @@ countriesInfo.forEach(country => {
     }
 })
 
-// how many region there are 
-countriesInfo.forEach(country => {
-    console.log(country.region);
-    
-}) */
-
 /* // search how many regions there are in the world
 const countRegions = (arr) => {
     let regions = [];
@@ -151,6 +214,5 @@ const countRegions = (arr) => {
       
     });
     return regions.length;
-  
-  } */
+} */
 

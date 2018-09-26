@@ -35,6 +35,12 @@ header {
     font-weight: bolder;
 }
 
+.fa-sort {
+    padding: 3px;
+    background-color: rgb(192, 187, 187);
+
+}
+
 /* ======================== Search Bar =========================== */
 .search-bar {
     width: 60%;
@@ -124,6 +130,6 @@ tr:nth-child(even) {
 }
 
 tbody tr:hover {
-    background-color: rgba(196, 196, 196, 0.897);
+    background-color: rgba(230, 241, 166, 0.897);
 }
 
