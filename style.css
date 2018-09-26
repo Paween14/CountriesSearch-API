@@ -1,0 +1,129 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(79, 106, 156);
+    font-family: "Gill Sans", Georgia, Arial, Helvetica, sans-serif;
+    border: 1px solid #00B4CC;
+    padding: 3em 10%;
+    height: 100vh;
+    width: 100vw;
+}
+
+header {
+    background-color: #FFF;
+    padding: 2rem 4rem 9rem;
+    text-align: center;
+    position: relative;
+    
+}
+
+.credit {
+    position: absolute;
+    bottom: 5%;
+    right: 2%;
+    font-size: 12px;
+    color: rgb(133, 132, 132);
+}
+
+.credit a {
+    text-decoration: none;
+    color: rgb(97, 92, 92);
+    font-weight: bolder;
+}
+
+/* ======================== Search Bar =========================== */
+.search-bar {
+    width: 60%;
+    position: relative;
+    position: absolute;
+    top: 63%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 20px;
+}
+
+.input-search {
+    float: left;
+    width: 100%;
+    border: 3px solid #00B4CC;
+    padding: 15px;
+    height: 50px;
+    border-radius: 5px;
+    outline: none;
+    color: #9DBFAF;
+    font-size: 1rem;
+}
+
+.input-search:focus {
+    color: #00B4CC;
+    background: rgb(244, 247, 245);
+}
+
+.search-btn {
+    position: absolute;  
+    right: -34px;
+    width: 70px;
+    height: 50px;
+    border: 1px solid #00B4CC;
+    background: #00B4CC;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/* ======================== Table information area =========================== */
+.wrapper-area {
+    background-color: rgb(190, 206, 195);
+    padding: 10px;
+    max-width: 100%;         
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    margin: 0 auto;
+    max-width: 100%;
+    table-layout: fixed;            /* To solve the problem having when the number of columns is over than 30 cols, then the col will be shown out of the scope of the table-area section */
+    border: 1px solid rgb(214, 214, 214);
+}
+
+thead tr {
+    display: grid;
+    grid-template-columns: repeat( auto-fit , minmax(50px,1fr));
+}
+
+tbody tr {
+    display: grid;
+    grid-template-columns: repeat( auto-fit , minmax(50px,1fr));
+    grid-template-rows: repeat( auto-fit , 115px);
+
+}  
+
+th {
+    background-color: rgb(151, 151, 151);
+}
+
+th, td {
+    border: 1px solid #FFF;
+    word-wrap: break-word;
+    text-align: center;
+    padding: 10px 5px;
+}
+
+tr:nth-child(even) {
+    background-color: rgb(228, 238, 240);
+}
+
+tbody tr:hover {
+    background-color: rgba(196, 196, 196, 0.897);
+}
+
