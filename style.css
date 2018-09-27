@@ -15,10 +15,13 @@ body {
 
 header {
     background-color: #FFF;
+    background-image: url('./Assets/world-map.gif');
+    background-repeat: no-repeat;
+    /* background-position: center;                */
+    background-size: cover; 
     padding: 2rem 4rem 9rem;
     text-align: center;
     position: relative;
-    
 }
 
 .credit {
@@ -39,6 +42,22 @@ header {
     padding: 3px;
     background-color: rgb(192, 187, 187);
 
+}
+
+th select {
+    background-color: rgb(192, 187, 187);
+    width: 80%;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: "Gill Sans", Georgia, Arial, Helvetica, sans-serif;
+}
+
+/* ======================== General =========================== */
+.mb-1 {
+    margin-bottom: 1rem;
+}
+.mt-2 {
+    margin-top: 2rem;
 }
 
 /* ======================== Search Bar =========================== */
@@ -99,19 +118,20 @@ table {
     margin: 0 auto;
     max-width: 100%;
     table-layout: fixed;            /* To solve the problem having when the number of columns is over than 30 cols, then the col will be shown out of the scope of the table-area section */
-    border: 1px solid rgb(214, 214, 214);
+    /* border: 1px solid rgb(214, 214, 214); */
 }
 
 thead tr {
     display: grid;
     grid-template-columns: repeat( auto-fit , minmax(50px,1fr));
+    border: 1px solid rgb(214, 214, 214);
 }
 
 tbody tr {
     display: grid;
     grid-template-columns: repeat( auto-fit , minmax(50px,1fr));
     grid-template-rows: repeat( auto-fit , 115px);
-
+    border: 1px solid rgb(214, 214, 214);
 }  
 
 th {
@@ -119,7 +139,7 @@ th {
 }
 
 th, td {
-    border: 1px solid #FFF;
+    /* border: 1px solid #FFF; */
     word-wrap: break-word;
     text-align: center;
     padding: 10px 5px;
