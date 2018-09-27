@@ -7,8 +7,7 @@
 body {
     background-color: rgb(79, 106, 156);
     font-family: "Gill Sans", Georgia, Arial, Helvetica, sans-serif;
-    border: 1px solid #00B4CC;
-    padding: 3em 10%;
+    padding: 2em 10%;
     height: 100vh;
     width: 100vw;
 }
@@ -47,8 +46,9 @@ header {
 th select {
     background-color: rgb(192, 187, 187);
     width: 80%;
-    font-size: 0.8rem;
+    font-size: 12px;
     font-weight: 600;
+    word-wrap: break-word;
     font-family: "Gill Sans", Georgia, Arial, Helvetica, sans-serif;
 }
 
@@ -105,8 +105,9 @@ th select {
 /* ======================== Table information area =========================== */
 .wrapper-area {
     background-color: rgb(190, 206, 195);
-    padding: 10px;
-    max-width: 100%;         
+    background-image: url('./Assets/world-map.gif');
+    padding: 0 10px 10px;
+    max-width: 100%; 
 
     display: flex;
     flex-wrap: wrap;
@@ -146,7 +147,11 @@ th, td {
 }
 
 tr:nth-child(even) {
-    background-color: rgb(228, 238, 240);
+    background-color: rgba(228, 238, 240, 0.7);
+}
+
+tr:nth-child(odd) {
+    background-color: rgba(190, 206, 195, 0.7);
 }
 
 tbody tr:hover {

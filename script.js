@@ -19,9 +19,12 @@ const searchInput = document.querySelector('.input-search');
 const button = document.querySelector('.fa-search');
 const wrapper = document.querySelector('.wrapper-area');
 const tableBody = document.querySelector('tbody');
-const sortPop = document.querySelector('.fa-sort');
+const sortName  = document.querySelector('.country-name-sort');
+const sortCap = document.querySelector('.capital-sort');
+const sortPop = document.querySelector('.pop-sort');
 const continentSelect = document.querySelector('.option-continent');
 
+//const test = document.querySelector('.country-name-sort');
 // =================================== Fetch function ===================================
 
 const url = 'https://restcountries.eu/rest/v2/all';
@@ -113,6 +116,72 @@ const sortCountry = () => {
         //console.log(firstChar);
 }
 
+// Country Name sort function
+const countryNameAscen = () => {
+    let selectedRegionInfo = selectedRegion();
+    let sortCountryName = selectedRegionInfo.sort((a, b) => 
+        //a.name == b.name ? 0 : a.name < b.name ? -1 : 1
+        a.name.localeCompare(b.name)
+    );
+    createBoxOfInfo(sortCountryName);
+    //test.classList.remove('fa-sort-up');        // delete all the classes in the element
+    //test.classList.add('fa-sort-down');
+    sortName.removeEventListener('click', countryNameAscen);
+    sortName.addEventListener('click', countryNameDescen);
+    return sortCountryName;
+}
+
+const countryNameDescen = () => {
+    let selectedRegionInfo = selectedRegion();
+    let sortCountryName = selectedRegionInfo.sort((a, b) => 
+        //a.name == b.name ? 0 : a.name > b.name ? -1 : 1
+        b.name.localeCompare(a.name)
+    );
+    createBoxOfInfo(sortCountryName);
+    //test.classList.remove('fa-sort-down');
+    //test.classList.add('fa-sort-up');
+    sortName.removeEventListener('click', countryNameDescen);
+    sortName.addEventListener('click', countryNameAscen);
+    return sortCountryName;
+}
+
+// Capital Name sort function
+const capitalAscen = () => {
+    let selectedRegionInfo = selectedRegion();
+    let sortCapitalName = selectedRegionInfo.sort((a, b) => 
+        a.capital.localeCompare(b.capital)
+    );
+    createBoxOfInfo(sortCapitalName);
+    sortCap.removeEventListener('click', capitalAscen);
+    sortCap.addEventListener('click', capitalDescen);
+    return sortCapitalName;
+}
+
+const capitalDescen = () => {
+    let selectedRegionInfo = selectedRegion();
+    let sortCapitalName = selectedRegionInfo.sort((a, b) => 
+        b.capital.localeCompare(a.capital)
+    );
+    createBoxOfInfo(sortCapitalName);
+    sortCap.removeEventListener('click', capitalDescen);
+    sortCap.addEventListener('click', capitalAscen);
+    return sortCapitalName;
+}
+
+/* const countryNameDescen = (property) => {
+    let selectedRegionInfo = selectedRegion();
+    let sortCountryName = selectedRegionInfo.sort((a, b) => {
+        if (property == 'name') {
+            a.name == b.name ? 0 : a.name > b.name ? -1 : 1
+        } else {
+            a.capital == b.capital ? 0 : a.capital > b.capital ? -1 : 1
+        }
+    });
+    createBoxOfInfo(sortCountryName);
+    return sortCountryName;
+} */
+
+// Population sort function
 const sortPopulationDescen = () => {
     let selectedRegionInfo = selectedRegion();           // return countries which in that region which is selected
         //console.log(selectedRegionInfo);
@@ -169,19 +238,21 @@ const selectedRegion = () => {
 }
 
 // =================================== Event listeners ===================================
-let clickCount = 0;
+let clickCount1 = 0;
 searchInput.addEventListener('input', sortCountry);
 button.addEventListener('click', sortCountry);
+sortName.addEventListener('click', countryNameAscen);
+sortCap.addEventListener('click', capitalAscen);
 sortPop.addEventListener('click', () => {
     //let clickCount = 0;    ---- problem: 'clickCount' has to be in global scope
     
-    if ( clickCount%2 == 0 ) {
+    if ( clickCount1%2 == 0 ) {
         sortPopulationDescen();
     } else {
         sortPopulationAscen();
     }
-    console.log(clickCount);
-    clickCount++;
+        //console.log(clickCount1);
+    clickCount1++;
     
 });
 continentSelect.addEventListener('click', selectedRegion);
@@ -216,3 +287,18 @@ const countRegions = (arr) => {
     return regions.length;
 } */
 
+/*  --- sort character 
+        array.sort(function(a, b){
+            var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase();
+            if (nameA < nameB) //sort string ascending
+            return -1;
+            if (nameA > nameB)
+            return 1;
+            return 0; //default return value (no sorting)
+        });
+
+        countriesInfo.sort((a, b) => a.name !== b.name ? a.name > b.name ? -1 : 1 : 0);
+
+        user.sort(function(a, b){
+            return a.firstname == b.firstname ? 0 : a.firstname < b.firstname ? -1 : 1;
+        }) */
