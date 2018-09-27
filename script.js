@@ -71,12 +71,14 @@ const createBoxOfInfo = (countryArr) => {
     tableBody.innerHTML = '';
     let row;
     countryArr.forEach(country => {
+        let populationWithCommas = numberWithCommas(country.population);
+
         row = document.createElement('tr');
         const html = `
             <td><img src='${country.flag}' alt='${country.name}' width='100%'></td>
             <td>${country.name}</td>
             <td>${country.capital}</td>
-            <td>${country.population}</td>
+            <td>${populationWithCommas}</td>
             <td>${country.region}</td>
             <td>${country.subregion}</td>
             <td>${country.currency[0]} <br> ( ${country.currency[1]} )</td>
@@ -87,6 +89,10 @@ const createBoxOfInfo = (countryArr) => {
 
     })
 }
+
+const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
 const sortCountry = () => {
     let inputValue = searchInput.value.toLowerCase();

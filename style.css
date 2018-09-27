@@ -117,7 +117,7 @@ table {
     border-collapse: collapse;
     border-spacing: 0px;
     margin: 0 auto;
-    max-width: 100%;
+    width: 100%;
     table-layout: fixed;            /* To solve the problem having when the number of columns is over than 30 cols, then the col will be shown out of the scope of the table-area section */
     /* border: 1px solid rgb(214, 214, 214); */
 }
