@@ -50,7 +50,8 @@ const countryData = arr => {
                     languages.push(language.name);
                 }
 
-            countriesInfo.push({name: country.name,
+            countriesInfo.push({
+                name: country.name,
                 capital: country.capital,
                 population: country.population,
                 region: country.region,
@@ -58,7 +59,6 @@ const countryData = arr => {
                 language: languages,
                 currency: [country.currencies[0].name, country.currencies[0].symbol],
                 flag: country.flag
-                                       
             });
 
         })
