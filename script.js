@@ -16,7 +16,7 @@
 // =====================================================================================
 
 const searchInput = document.querySelector('.input-search');
-const button = document.querySelector('.fa-search');
+const searchButton = document.querySelector('.fa-search');
 const wrapper = document.querySelector('.wrapper-area');
 const tableBody = document.querySelector('tbody');
 const sortName  = document.querySelector('.country-name-sort');
@@ -35,27 +35,34 @@ fetch(url)
                 //console.log(countryData(countries))
                 countryData(countries);
                 createBoxOfInfo(countriesInfo);
-                countRegions(countriesInfo);
+                regionDropdownMenu(countriesInfo);
             })
  
-// =================================== Helper functions ===================================
-let countriesInfo = [];                     // **Collect all the data of each country in the array and each country in itself object
+// =================================== Functionalities ===================================
+let countriesInfo = [];                                 // **(Optional: because 'countryData' returns array too)Collect all the data of each country in the array and each country in itself object
 
 const countryData = arr => {
     //console.log(countries);
 
         arr.forEach((country) => {
-            let languages = [];
+            // Destructuring
+            let { name,
+                capital,
+                population,
+                region,
+                subregion} = country
+
+            let languages = [];    
             for (let language of country.languages) {
                     languages.push(language.name);
-                }
+            }
 
             countriesInfo.push({
-                name: country.name,
-                capital: country.capital,
-                population: country.population,
-                region: country.region,
-                subregion: country.subregion,
+                name,
+                capital,
+                population,
+                region,
+                subregion,
                 language: languages,
                 currency: [country.currencies[0].name, country.currencies[0].symbol],
                 flag: country.flag
@@ -86,7 +93,6 @@ const createBoxOfInfo = (countryArr) => {
         `;
         row.innerHTML = html;
         tableBody.appendChild(row);
-
     })
 }
 
@@ -94,16 +100,18 @@ const numberWithCommas = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-const sortCountry = () => {
+// Search function which takes input.value to match the results
+const searchCountry = () => {
     let inputValue = searchInput.value.toLowerCase();
+    let selectedRegionInfo = selectedRegion();                  // So, user can search info from selected region.
 
     if (inputValue.length == 1) {
-        let firstChar = countriesInfo.filter((country) => {
+        let firstChar = selectedRegionInfo.filter((country) => {
             return country.name.toLowerCase()[0] == inputValue;     
         })
         createBoxOfInfo(firstChar);
     } else if (inputValue.length > 1) {
-        let includingWord = countriesInfo.filter((country) => {
+        let includingWord = selectedRegionInfo.filter((country) => {
             let name =  country.name.toLowerCase().includes(inputValue);
             let capital =  country.capital.toLowerCase().includes(inputValue);
             let region =  country.region.toLowerCase().includes(inputValue);
@@ -115,7 +123,7 @@ const sortCountry = () => {
             //console.log(includingWord);   ---> for study how it works when it's searching
         createBoxOfInfo(includingWord);
     }  else {  //for empty string
-        createBoxOfInfo(countriesInfo);
+        createBoxOfInfo(selectedRegionInfo);
     }    
    
     // searchInput.value = '';    ----> because in this case, we don't have to clear the input value, when users type in, it won't clear automatically everytime
@@ -206,7 +214,7 @@ const sortPopulationAscen = () => {
 
 
 // Create the select menu from what region there are around the world
-const countRegions = (arr) => {
+const regionDropdownMenu = (arr) => {
     let regions = [];
     arr.forEach((country) => {
       if(!regions.includes(country.region)){
@@ -245,8 +253,8 @@ const selectedRegion = () => {
 
 // =================================== Event listeners ===================================
 let clickCount1 = 0;
-searchInput.addEventListener('input', sortCountry);
-button.addEventListener('click', sortCountry);
+searchInput.addEventListener('input', searchCountry);
+searchButton.addEventListener('click', searchCountry);
 sortName.addEventListener('click', countryNameAscen);
 sortCap.addEventListener('click', capitalAscen);
 sortPop.addEventListener('click', () => {

@@ -158,3 +158,13 @@ tbody tr:hover {
     background-color: rgba(230, 241, 166, 0.897);
 }
 
+/* ================================================= 
+  Media Queries
+================================================== */
+/* @media only screen and (max-width : 826px) {
+
+    thead tr th {
+        font-size: 12px;
+    }
+} */
+
