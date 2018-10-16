@@ -69,7 +69,6 @@ const countryData = arr => {
             });
 
         })
-
     //return createBoxOfInfo(countriesInfo);
     return countriesInfo;
 }
@@ -100,6 +99,43 @@ const numberWithCommas = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+// Create the select menu from what region there are around the world
+const regionDropdownMenu = (arr) => {
+    let regions = [];
+    arr.forEach((country) => {
+      if(!regions.includes(country.region)){
+        regions.push(country.region)
+      }
+    });
+    //return regions;
+
+    continentSelect.innerHTML = '';
+    let firstOpt = document.createElement('option');
+    firstOpt.innerHTML = 'Continent';
+    continentSelect.appendChild(firstOpt);
+    regions.forEach((region) => {
+       let option = document.createElement('option');
+       option.innerHTML = region; 
+       option.value = region;
+       continentSelect.appendChild(option); 
+    })
+}
+
+const selectedRegion = () => {
+    // To sort the countries by selected region
+    let selectedOpt = continentSelect.options[continentSelect.selectedIndex].value;
+    //console.log(selectedOpt);
+    
+    let selectedRegion = countriesInfo.filter((country) => {
+        if (selectedOpt == 'Continent') {
+            return countriesInfo;
+        }
+        return country.region == selectedOpt;
+    })
+    createBoxOfInfo(selectedRegion);
+    return selectedRegion;
+}
+
 // Search function which takes input.value to match the results
 const searchCountry = () => {
     let inputValue = searchInput.value.toLowerCase();
@@ -125,7 +161,6 @@ const searchCountry = () => {
     }  else {  //for empty string
         createBoxOfInfo(selectedRegionInfo);
     }    
-   
     // searchInput.value = '';    ----> because in this case, we don't have to clear the input value, when users type in, it won't clear automatically everytime
         //console.log(firstChar);
 }
@@ -212,45 +247,6 @@ const sortPopulationAscen = () => {
     return sortPop;
 }
 
-
-// Create the select menu from what region there are around the world
-const regionDropdownMenu = (arr) => {
-    let regions = [];
-    arr.forEach((country) => {
-      if(!regions.includes(country.region)){
-        regions.push(country.region)
-      }
-    });
-    //return regions;
-
-    continentSelect.innerHTML = '';
-    let firstOpt = document.createElement('option');
-    firstOpt.innerHTML = 'Continent';
-    continentSelect.appendChild(firstOpt);
-    regions.forEach((region) => {
-       let option = document.createElement('option');
-       option.innerHTML = region; 
-       option.value = region;
-       continentSelect.appendChild(option); 
-    })
-}
-
-const selectedRegion = () => {
-    // To sort the countries by selected region
-    let selectedOpt = continentSelect.options[continentSelect.selectedIndex].value;
-    //console.log(selectedOpt);
-    
-    let selectedRegion = countriesInfo.filter((country) => {
-        if (selectedOpt == 'Continent') {
-            return countriesInfo;
-        }
-        return country.region == selectedOpt;
-    })
-    createBoxOfInfo(selectedRegion);
-    return selectedRegion;
-    
-}
-
 // =================================== Event listeners ===================================
 let clickCount1 = 0;
 searchInput.addEventListener('input', searchCountry);
@@ -259,7 +255,6 @@ sortName.addEventListener('click', countryNameAscen);
 sortCap.addEventListener('click', capitalAscen);
 sortPop.addEventListener('click', () => {
     //let clickCount = 0;    ---- problem: 'clickCount' has to be in global scope
-    
     if ( clickCount1%2 == 0 ) {
         sortPopulationDescen();
     } else {
@@ -267,7 +262,6 @@ sortPop.addEventListener('click', () => {
     }
         //console.log(clickCount1);
     clickCount1++;
-    
 });
 continentSelect.addEventListener('click', selectedRegion);
 
